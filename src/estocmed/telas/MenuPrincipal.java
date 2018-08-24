@@ -5,9 +5,15 @@
  */
 package estocmed.telas;
 
+import estocmed.estoqueconsumo.EstoqueConsumo;
+import estocmed.saidaconsumo.SaidaConsumo;
+import estocmed.saidaconsumo.SaidaConsumoDAO;
 import estocmed.usuario.Usuario;
 import estocmed.usuario.UsuarioDAO;
+import estocmed.util.Relatorios;
 import estocmed.util.Util;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,6 +68,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         saidaProdutoPermanente1 = new javax.swing.JMenuItem();
         subDevolverEstoquePermanente = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
+        subRelatorioProdutoConsumo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 559));
@@ -294,6 +301,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 menuRelatorioActionPerformed(evt);
             }
         });
+
+        subRelatorioProdutoConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/birdpoint/imagens/add12-12.png"))); // NOI18N
+        subRelatorioProdutoConsumo.setText("Saída Estoque Consumo");
+        subRelatorioProdutoConsumo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        subRelatorioProdutoConsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subRelatorioProdutoConsumoActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(subRelatorioProdutoConsumo);
+
         jMenu.add(menuRelatorio);
 
         setJMenuBar(jMenu);
@@ -388,6 +406,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cc.setVisible(true);
     }//GEN-LAST:event_subCursoActionPerformed
 
+    private void subRelatorioProdutoConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subRelatorioProdutoConsumoActionPerformed
+        SaidaConsumoDAO saidaConsumoDAO = new SaidaConsumoDAO(usuario);
+        List<SaidaConsumo> listaSaidaConsumos = saidaConsumoDAO.listar();
+        
+        Relatorios.gerarRelatorio(listaSaidaConsumos);
+    }//GEN-LAST:event_subRelatorioProdutoConsumoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -445,6 +470,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subFornecedor;
     private javax.swing.JMenuItem subProdutoConsumo;
     private javax.swing.JMenuItem subProdutoPermanente;
+    private javax.swing.JMenuItem subRelatorioProdutoConsumo;
     private javax.swing.JMenuItem subSetor;
     private javax.swing.JMenuItem subTipoProduto;
     private javax.swing.JMenuItem subUsuario;

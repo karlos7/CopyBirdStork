@@ -50,6 +50,7 @@ public class CadastroEstoqueConsumo extends javax.swing.JDialog {
         btLimparActionPerformed(null);
         setModal(true);
         txtProduto.setEnabled(false);
+        txtCurso.setEnabled(false);
         this.usuario = usuario;
         fornecedorDAO = new FornecedorDAO(this.usuario);
         produtoDAO = new ProdutoConsumoDAO(this.usuario);
