@@ -3,6 +3,7 @@ package estocmed.produtoconsumo;
 import estocmed.estoqueconsumo.EstoqueConsumo;
 import estocmed.fornecedor.Fornecedor;
 import estocmed.tipodoproduto.TipoDoProduto;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ProdutoConsumo{
+public class ProdutoConsumo implements Serializable {
 
     @Id
     @GeneratedValue
