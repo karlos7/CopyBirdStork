@@ -1,7 +1,6 @@
 package estocmed.util;
 
-
-
+import estocmed.estoqueconsumo.EstoqueConsumo;
 import estocmed.produtoconsumo.ProdutoConsumo;
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -107,76 +106,7 @@ public class Util {
     }
 
     
-//    public static void gerarRelatorioUsuarios(List usuarios){
-//        // criação do documento
-//        Document document = new Document();
-//        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
-//        String diretorioPdf = System.getProperty("user.home") + "/AppData/Local/Temp/estocmed_relatorio_tmp.pdf";
-//
-//        try {
-//
-//            try {
-//                PdfWriter.getInstance(document, new FileOutputStream(diretorioPdf));
-//            } catch (com.itextpdf.text.DocumentException ex) {
-//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            document.open();
-//
-//            try {
-//                document.add(new Paragraph("EstocMed - Relatório de usuários", boldFont));
-//            } catch (com.itextpdf.text.DocumentException ex) {
-//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//           
-//            try {
-//                document.add(new Paragraph(" "));
-//            } catch (com.itextpdf.text.DocumentException ex) {
-//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            PdfPTable tabela = new PdfPTable(3);
-//
-//            PdfPCell celula = new PdfPCell(new Phrase("Lista de usuários - " + usuarios.size() + " resultados encontrados"));
-//
-//            celula.setColspan(3);
-//            tabela.addCell(celula);
-//
-//            PdfPCell celulaTituloNome = new PdfPCell(new Phrase("Nome", boldFont));
-//            PdfPCell celulaTituloLogin = new PdfPCell(new Phrase("Login", boldFont));
-//            PdfPCell celulaTituloTipoUsuario = new PdfPCell(new Phrase("Tipo Usuário", boldFont));
-//
-//            tabela.addCell(celulaTituloNome);
-//            tabela.addCell(celulaTituloLogin);
-//            tabela.addCell(celulaTituloTipoUsuario);
-//
-//            for (Object objUsuario : usuarios) {
-//
-//                Usuario usuario = (Usuario) objUsuario;
-//
-//                PdfPCell celulaNome = new PdfPCell(new Phrase(usuario.getNomeUsuario()));
-//                PdfPCell celulaLogin = new PdfPCell(new Phrase(usuario.getLoginUsuario()));
-//                PdfPCell celulaEmail = new PdfPCell(new Phrase(usuario.getTipoUsuario()));
-//
-//                tabela.addCell(celulaNome);
-//                tabela.addCell(celulaLogin);
-//                tabela.addCell(celulaEmail);
-//            }
-//
-//            tabela.setWidthPercentage(100);
-//            try {
-//                document.add(tabela);
-//            } catch (com.itextpdf.text.DocumentException ex) {
-//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            Desktop.getDesktop().open(new File(diretorioPdf));
-//        } catch (IOException de) {
-//            System.err.println(de.getMessage());
-//        }
-//        document.close();
-//    }
-    
-    
+
     /**
      * Realiza a validação do CPF.
      *

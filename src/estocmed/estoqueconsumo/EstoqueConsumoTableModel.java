@@ -6,7 +6,9 @@
 package estocmed.estoqueconsumo;
 
 import estocmed.usuario.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -33,6 +35,11 @@ public class EstoqueConsumoTableModel extends AbstractTableModel {
         return colunas.length;
     }
 
+    private String converterDataString(Date date) {
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        return f.format(date);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         EstoqueConsumo estoque = estoques.get(rowIndex);
@@ -48,7 +55,7 @@ public class EstoqueConsumoTableModel extends AbstractTableModel {
             case 4:
                 return estoque.getDataEntrada();
             case 5:
-                return estoque.getVencimento();
+                return converterDataString(estoque.getDataVencimento());
             case 6:
                 return estoque.getTipoEntrada();
 

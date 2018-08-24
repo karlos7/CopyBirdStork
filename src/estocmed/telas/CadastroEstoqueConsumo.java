@@ -18,6 +18,8 @@ import estocmed.produtoconsumo.ProdutoConsumoDAO;
 import estocmed.produtoconsumo.ProdutoConsumoTableModel;
 import estocmed.usuario.Usuario;
 import estocmed.util.Util;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -332,7 +334,7 @@ public class CadastroEstoqueConsumo extends javax.swing.JDialog {
             estoque = estoqueDAO.consultarObjetoId("idEstoque", objetoRetorno);
             String quantidade = estoque.getQtdEstoque().toString();
             txtQuantidade.setText(quantidade);
-            txtVencimento.setText(estoque.getVencimento());
+            txtVencimento.setText(converterDataString(estoque.getDataVencimento()));
             txtProduto.setText(estoque.getProduto().getNomeProdutoConsumo());
             if (estoque.getTipoEntrada().equalsIgnoreCase(jrEstagio.getText())) {
                 jrEstagio.setSelected(true);
@@ -347,6 +349,25 @@ public class CadastroEstoqueConsumo extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btPesquisarActionPerformed
 
+    private String converterDataString(Date date) {
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        return f.format(date);
+    }
+    
+    private Date formataData(String data) {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+        Date d = null;
+        try {
+            DateFormat formatar = new SimpleDateFormat("dd/MM/yyyy");
+            d = formatar.parse(data);
+        } catch (ParseException e) {
+
+        }
+        return d;
+    }
+    
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         estoqueDAO.excluir(estoque);
         btLimparActionPerformed(null);
@@ -365,7 +386,7 @@ public class CadastroEstoqueConsumo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Prencha todos os campos !!");
         } else {
             estoque.setQtdEstoque(Integer.parseInt(txtQuantidade.getText()));
-            estoque.setVencimento(txtVencimento.getText());
+            estoque.setDataVencimento(formataData(txtVencimento.getText()));
             if (jrEstagio.isSelected()) {
                 estoque.setTipoEntrada(jrEstagio.getText());
             } else if (jrLaboratorio.isSelected()) {

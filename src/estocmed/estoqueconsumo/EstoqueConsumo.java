@@ -40,7 +40,7 @@ public class EstoqueConsumo implements Comparable<EstoqueConsumo> {
     @Column(length = 100, nullable = false)
     private Date dataEntrada;
     @Column(length = 100, nullable = false)
-    private String vencimento;
+    private Date dataVencimento;
     @Column(length = 100, nullable = false)
     private String tipoEntrada;
 
@@ -90,12 +90,12 @@ public class EstoqueConsumo implements Comparable<EstoqueConsumo> {
         this.qtdSaida = qtdSaida;
     }
 
-    public String getVencimento() {
-        return vencimento;
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setVencimento(String vencimento) {
-        this.vencimento = vencimento;
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public String getTipoEntrada() {

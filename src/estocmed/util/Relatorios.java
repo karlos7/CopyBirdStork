@@ -14,11 +14,13 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import estocmed.estoqueconsumo.EstoqueConsumo;
 import estocmed.saidaconsumo.SaidaConsumo;
+import estocmed.saidaconsumo.SaidaConsumoTableModel;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,6 +75,7 @@ public class Relatorios {
             Paragraph linha0 = new Paragraph("________________________________", fontLinhaMenor);
             linha0.setAlignment(Element.ALIGN_CENTER);
             linha0.setSpacingAfter(-21);
+            linha0.setSpacingBefore(-21);
             document.add(linha0);
 
             Paragraph linha2 = new Paragraph("______________________________________________", fontLinha);
@@ -83,24 +86,22 @@ public class Relatorios {
             linha3.setAlignment(Element.ALIGN_CENTER);
             linha3.setSpacingBefore(-16);
             document.add(linha3);
+            
+            Paragraph linha4 = new Paragraph("");
+            linha4.setAlignment(Element.ALIGN_CENTER);
+            linha4.setSpacingBefore(20);
+            document.add(linha4);
 
-            Paragraph linha = new Paragraph();
-            linha.setAlignment(Element.ALIGN_CENTER);
-            document.add(linha);
-            document.add(new Paragraph(" "));
+            
         } catch (com.itextpdf.text.DocumentException ex) {
             Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void gerarRelatorio(List relatorioGeral) {
-        Font normal = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+    public static void gerarRelatorioTabela(List relatorioGeral) {
         String diretorioPdf = "saida_estoque_consumo" + formatarData.format(new Date()) + ".pdf";
-        Font fontLinhaMenor = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-        List<String> produto = new ArrayList<>();
-        List<String> destino = new ArrayList<>();
-        int i = 1;
-
+        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+        
         try {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(diretorioPdf));
@@ -110,63 +111,108 @@ public class Relatorios {
             document.open();
             gerarCabecalho();
 
-            for (Object obj : relatorioGeral) {
-                SaidaConsumo saidaConsumo = (SaidaConsumo) obj;
-                produto.add(saidaConsumo.getEstoqueConsumo().get(0).getProduto().toString());
-                destino.add(saidaConsumo.getDestino().getNomeDestino());
-            }
-            try {
-                if (relatorioGeral.size() > 0) {
+            PdfPTable tabela = new PdfPTable(4);
 
-                    for (Object obj : relatorioGeral) {
-                        SaidaConsumo saidaConsumo = (SaidaConsumo) obj;
-                        if (!(produto.get(i - 1).equals(saidaConsumo.getEstoqueConsumo().get(0).getProduto().getNomeProdutoConsumo()) && destino.get(i - 1).equals(saidaConsumo.getDestino().getNomeDestino()))) {
-                            Paragraph linha1 = new Paragraph("Produto: " + saidaConsumo.getEstoqueConsumo().get(0).getProduto().getNomeProdutoConsumo(), normal);
-                            linha1.setAlignment(Element.ALIGN_JUSTIFIED);
-                            linha1.setIndentationLeft(25);
-                            document.add(linha1);
-                            Paragraph linha2 = new Paragraph("Destino: " + saidaConsumo.getDestino().getNomeDestino(), normal);
-                            linha2.setAlignment(Element.ALIGN_JUSTIFIED);
-                            linha2.setIndentationLeft(25);
-                            document.add(linha2);
-                            Paragraph linha3 = new Paragraph("Quantidade em estoque: " + saidaConsumo.getEstoqueConsumo().get(0).getQtdEstoque().toString(), normal);
-                            linha3.setAlignment(Element.ALIGN_JUSTIFIED);
-                            linha3.setIndentationLeft(25);
-                            document.add(linha3);
-                            Paragraph linha4 = new Paragraph("Quantidade saída: " + saidaConsumo.getEstoqueConsumo().get(0).getQtdSaida().toString(), normal);
-                            linha4.setAlignment(Element.ALIGN_JUSTIFIED);
-                            linha4.setIndentationLeft(25);
-                            document.add(linha4);
-                            Paragraph linha0 = new Paragraph("________________________________", fontLinhaMenor);
-                            linha0.setAlignment(Element.ALIGN_LEFT);
-                            linha0.setSpacingAfter(2);
-                            linha0.setSpacingBefore(-20);
-                            linha0.setIndentationLeft(25);
-                            document.add(linha0);
-                            if (i<=produto.size()) {
-                                i++;
-                            }
-                            
-                        }
 
-                    }
+            PdfPCell celulaTituloNome = new PdfPCell(new Phrase("Nome Produto", boldFont));
+            PdfPCell celulaTituloSetor = new PdfPCell(new Phrase("Setor", boldFont));
+            PdfPCell celulaTituloEstoque = new PdfPCell(new Phrase("Qtd. Estoque", boldFont));
+            PdfPCell celulaTituloSaida = new PdfPCell(new Phrase("Qtd. Saída", boldFont));
 
-                }
-            } catch (com.itextpdf.text.DocumentException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            tabela.addCell(celulaTituloNome);
+            tabela.addCell(celulaTituloSetor);
+            tabela.addCell(celulaTituloEstoque);
+            tabela.addCell(celulaTituloSaida);
+
+            for (Object objUsuario : relatorioGeral) {
+
+                EstoqueConsumo estoqueConsumo = (EstoqueConsumo) objUsuario;
+
+                PdfPCell celulaNome = new PdfPCell(new Phrase(estoqueConsumo.getProduto().getNomeProdutoConsumo()));
+                PdfPCell celulaSetor = new PdfPCell(new Phrase(estoqueConsumo.getTipoEntrada()));
+                PdfPCell celulaEstoque = new PdfPCell(new Phrase(estoqueConsumo.getQtdEstoque().toString()));
+                PdfPCell celulaSaida = new PdfPCell(new Phrase(estoqueConsumo.getQtdSaida().toString()));
+
+                tabela.addCell(celulaNome);
+                tabela.addCell(celulaSetor);
+                tabela.addCell(celulaEstoque);
+                tabela.addCell(celulaSaida);
             }
-            try {
-                document.add(new Paragraph(" "));
-            } catch (com.itextpdf.text.DocumentException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            tabela.setWidthPercentage(100);
+            document.add(tabela);
+
             Desktop.getDesktop().open(new File(diretorioPdf));
-        } catch (IOException de) {
+        } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
         }
         document.close();
         limparGeral();
     }
+
+//    public static void gerarRelatorio(List relatorioGeral) {
+//        Font normal = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+//        String diretorioPdf = "saida_estoque_consumo" + formatarData.format(new Date()) + ".pdf";
+//        Font fontLinhaMenor = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+//
+//        try {
+//            try {
+//                PdfWriter.getInstance(document, new FileOutputStream(diretorioPdf));
+//            } catch (com.itextpdf.text.DocumentException ex) {
+//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            document.open();
+//            gerarCabecalho();
+//
+//            try {
+//                if (relatorioGeral.size() > 0) {
+//
+//                    for (Object obj : relatorioGeral) {
+//                        EstoqueConsumo estoqueConsumo = (EstoqueConsumo) obj;
+//                        Paragraph linha1 = new Paragraph("Produto: " + estoqueConsumo.getProduto().getNomeProdutoConsumo()
+//                                + "Destino: " + estoqueConsumo.getTipoEntrada()
+//                                + "Quantidade em estoque: " + estoqueConsumo.getQtdEstoque()
+//                                + "Quantidade saída: " + estoqueConsumo.getQtdSaida(), normal);
+//                        linha1.setAlignment(Element.ALIGN_JUSTIFIED);
+//                        linha1.setIndentationLeft(25);
+//                        document.add(linha1);
+////                            Paragraph linha2 = new Paragraph("Destino: " + estoqueConsumo.getTipoEntrada(), normal);
+////                            linha2.setAlignment(Element.ALIGN_JUSTIFIED);
+////                            linha2.setIndentationLeft(25);
+////                            document.add(linha2);
+////                            Paragraph linha3 = new Paragraph("Quantidade em estoque: " + estoqueConsumo.getQtdEstoque(), normal);
+////                            linha3.setAlignment(Element.ALIGN_JUSTIFIED);
+////                            linha3.setIndentationLeft(25);
+////                            document.add(linha3);
+////                            Paragraph linha4 = new Paragraph("Quantidade saída: " + estoqueConsumo.getQtdSaida(), normal);
+////                            linha4.setAlignment(Element.ALIGN_JUSTIFIED);
+////                            linha4.setIndentationLeft(25);
+////                            document.add(linha4);
+//                        Paragraph linha0 = new Paragraph("________________________________", fontLinhaMenor);
+//                        linha0.setAlignment(Element.ALIGN_LEFT);
+//                        linha0.setSpacingAfter(2);
+//                        linha0.setSpacingBefore(-20);
+//                        linha0.setIndentationLeft(25);
+//                        document.add(linha0);
+//
+//                    }
+//
+//                }
+//            } catch (com.itextpdf.text.DocumentException ex) {
+//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                document.add(new Paragraph(" "));
+//            } catch (com.itextpdf.text.DocumentException ex) {
+//                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            Desktop.getDesktop().open(new File(diretorioPdf));
+//        } catch (IOException de) {
+//            System.err.println(de.getMessage());
+//        }
+//        document.close();
+//        limparGeral();
+//    }
 
     private static void limparGeral() {
         document = new Document();

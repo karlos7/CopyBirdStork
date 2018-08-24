@@ -5,9 +5,13 @@
  */
 package estocmed.telas;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import estocmed.estoqueconsumo.EstoqueConsumo;
+import estocmed.estoqueconsumo.EstoqueConsumoDAO;
+import estocmed.estoqueconsumo.EstoqueConsumoTableModel;
 import estocmed.saidaconsumo.SaidaConsumo;
 import estocmed.saidaconsumo.SaidaConsumoDAO;
+import estocmed.saidaconsumo.SaidaConsumoTableModel;
 import estocmed.usuario.Usuario;
 import estocmed.usuario.UsuarioDAO;
 import estocmed.util.Relatorios;
@@ -407,10 +411,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_subCursoActionPerformed
 
     private void subRelatorioProdutoConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subRelatorioProdutoConsumoActionPerformed
-        SaidaConsumoDAO saidaConsumoDAO = new SaidaConsumoDAO(usuario);
-        List<SaidaConsumo> listaSaidaConsumos = saidaConsumoDAO.listar();
-        
-        Relatorios.gerarRelatorio(listaSaidaConsumos);
+        InformarIntervaloDatas iid = new InformarIntervaloDatas(rootPaneCheckingEnabled, this.usuario);
+        iid.setVisible(true);
     }//GEN-LAST:event_subRelatorioProdutoConsumoActionPerformed
 
     /**

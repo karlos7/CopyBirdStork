@@ -78,7 +78,25 @@ public abstract class GenericDAO<T> {
         }
         return true;
     }
+    
+    public List<T> listaEntreDatas(EstoqueConsumo estoqueConsumo, java.util.Date dataInicio, java.util.Date dataFim) {
+        List<T> lista = null;
+        
+//         this.setSessao(HibernateUtil.getSessionFactory().openSession());
+//         setTransacao(getSessao().beginTransaction());
+//         this.getSessao().createCriteria(Object.class);
+//         lista = this.getSessao().createCriteria(Object.class)
+//                .add(Restrictions.between("dataVencimento", dataInicio, dataFim))
+//                .list();
+//        return lista;
 
+        lista = getSessao().createCriteria(EstoqueConsumo.class).
+              add(Restrictions.ge("Vencimento", dataInicio)).
+              add(Restrictions.le("Vencimento", dataFim)).
+              list();
+        return lista;
+    }
+    
     public boolean remover(T entity) {
         try {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
