@@ -2,11 +2,15 @@ package estocmed.util;
 
 import birdpoint.professor.Professor;
 import estocmed.estoqueconsumo.EstoqueConsumo;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
@@ -78,25 +82,34 @@ public abstract class GenericDAO<T> {
         }
         return true;
     }
-    
+
     public List<T> listaEntreDatas(EstoqueConsumo estoqueConsumo, java.util.Date dataInicio, java.util.Date dataFim) {
         List<T> lista = null;
         
-//         this.setSessao(HibernateUtil.getSessionFactory().openSession());
-//         setTransacao(getSessao().beginTransaction());
-//         this.getSessao().createCriteria(Object.class);
-//         lista = this.getSessao().createCriteria(Object.class)
+        this.setSessao(HibernateUtil.getSessionFactory().openSession());
+        setTransacao(getSessao().beginTransaction());
+        Criteria criteria = this.getSessao().createCriteria(EstoqueConsumo.class).add(Restrictions.between("dataVencimento", dataInicio, dataFim));
+        return criteria.list();
+
+//        this.setSessao(HibernateUtil.getSessionFactory().openSession());
+//        setTransacao(getSessao().beginTransaction());
+//        this.getSessao().createCriteria(Object.class);
+//        lista = this.getSessao().createCriteria(Object.class)
 //                .add(Restrictions.between("dataVencimento", dataInicio, dataFim))
 //                .list();
 //        return lista;
-
-        lista = getSessao().createCriteria(EstoqueConsumo.class).
-              add(Restrictions.ge("Vencimento", dataInicio)).
-              add(Restrictions.le("Vencimento", dataFim)).
-              list();
-        return lista;
+//        lista = getSessao().createCriteria(EstoqueConsumo.class).
+//              add(Restrictions.ge("dataVencimento", dataInicio)).
+//              add(Restrictions.le("dataVencimento", dataFim)).
+//              list();
+//        this.setSessao(HibernateUtil.getSessionFactory().openSession());
+//        setTransacao(getSessao().beginTransaction());
+//        Criteria criteria = this.getSessao().createCriteria(EstoqueConsumo.class);
+//        criteria.add(Restrictions.ge("dataVencimento", dataInicio));
+//        criteria.add(Restrictions.le("dataVencimento", dataFim));
+//        return criteria.list();
     }
-    
+
     public boolean remover(T entity) {
         try {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
@@ -130,8 +143,6 @@ public abstract class GenericDAO<T> {
         }
         return lista;
     }
-
-
 
     /*
      * ao passar uma chave primária
@@ -183,7 +194,7 @@ public abstract class GenericDAO<T> {
 
     }
 
-    public List<T> estoquesMaioresQueZero (String campo, int valor) {
+    public List<T> estoquesMaioresQueZero(String campo, int valor) {
         List<T> lista = null;
         try {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
@@ -200,8 +211,7 @@ public abstract class GenericDAO<T> {
         return lista;
 
     }
-    
-    
+
     public List<T> checkExistseq(String campo, Object valor) {
         List<T> lista = null;
         try {
@@ -219,7 +229,7 @@ public abstract class GenericDAO<T> {
         return lista;
 
     }
-    
+
     public T consultarObjetoId(String campo, Object valor) {
         T objeto = null;
         try {
@@ -238,7 +248,6 @@ public abstract class GenericDAO<T> {
 
     }
 
-    
     public boolean consultarValorRepetido(String campo, Object valor) {
         T objeto = null;
         try {
@@ -260,8 +269,7 @@ public abstract class GenericDAO<T> {
         }
 
     }
-     
- 
+
     /**
      * @return the sessao
      */

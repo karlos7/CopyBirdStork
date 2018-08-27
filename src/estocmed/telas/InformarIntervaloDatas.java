@@ -5,7 +5,6 @@
  */
 package estocmed.telas;
 
-
 import estocmed.estoqueconsumo.EstoqueConsumo;
 import estocmed.estoqueconsumo.EstoqueConsumoDAO;
 import estocmed.usuario.Usuario;
@@ -23,8 +22,11 @@ import javax.swing.JOptionPane;
  * @author Karlos
  */
 public class InformarIntervaloDatas extends javax.swing.JDialog {
-    
+
     Usuario usuario;
+    EstoqueConsumoDAO estoqueConsumoDAO = new EstoqueConsumoDAO(this.usuario);
+    EstoqueConsumo estoqueConsumo = new EstoqueConsumo();
+
     public InformarIntervaloDatas(boolean modal, Usuario usuario) {
         initComponents();
         getRootPane().setDefaultButton(btPesquisar);
@@ -157,14 +159,10 @@ public class InformarIntervaloDatas extends javax.swing.JDialog {
     }//GEN-LAST:event_btLimparActionPerformed
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        EstoqueConsumoDAO estoqueConsumoDAO = new EstoqueConsumoDAO(this.usuario);
-        EstoqueConsumo estoqueConsumo = new EstoqueConsumo();
         List<EstoqueConsumo> estoqueConsumos = estoqueConsumoDAO.listaEntreDatas(estoqueConsumo, formataData(txtDataInicial.getText()), formataData(txtDataFinal.getText()));
-        
         Relatorios.gerarRelatorioTabela(estoqueConsumos);
-
     }//GEN-LAST:event_btPesquisarActionPerformed
-    
+
     private Date formataData(String data) {
         if (data == null || data.equals("")) {
             return null;
@@ -178,17 +176,15 @@ public class InformarIntervaloDatas extends javax.swing.JDialog {
         }
         return d;
     }
-    
+
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    public String retornarData(){
+    public String retornarData() {
         return txtDataInicial.getText();
     }
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
