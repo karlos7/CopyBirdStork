@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -38,8 +39,10 @@ public class EstoqueConsumo implements Comparable<EstoqueConsumo> {
     private Integer qtdSaida;
 
     @Column(length = 100, nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataEntrada;
     @Column(length = 100, nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataVencimento;
     @Column(length = 100, nullable = false)
     private String tipoEntrada;

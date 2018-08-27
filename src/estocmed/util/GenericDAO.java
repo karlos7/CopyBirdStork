@@ -93,8 +93,8 @@ public abstract class GenericDAO<T> {
 
 //        this.setSessao(HibernateUtil.getSessionFactory().openSession());
 //        setTransacao(getSessao().beginTransaction());
-//        this.getSessao().createCriteria(Object.class);
-//        lista = this.getSessao().createCriteria(Object.class)
+//        this.getSessao().createCriteria(EstoqueConsumo.class);
+//        lista = this.getSessao().createCriteria(EstoqueConsumo.class)
 //                .add(Restrictions.between("dataVencimento", dataInicio, dataFim))
 //                .list();
 //        return lista;
@@ -102,6 +102,7 @@ public abstract class GenericDAO<T> {
 //              add(Restrictions.ge("dataVencimento", dataInicio)).
 //              add(Restrictions.le("dataVencimento", dataFim)).
 //              list();
+        
 //        this.setSessao(HibernateUtil.getSessionFactory().openSession());
 //        setTransacao(getSessao().beginTransaction());
 //        Criteria criteria = this.getSessao().createCriteria(EstoqueConsumo.class);
