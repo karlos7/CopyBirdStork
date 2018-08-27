@@ -84,11 +84,12 @@ public abstract class GenericDAO<T> {
     }
 
     public List<T> listaEntreDatas(EstoqueConsumo estoqueConsumo, java.util.Date dataInicio, java.util.Date dataFim) {
-        List<T> lista = null;
+        //List<T> lista = null;
         
         this.setSessao(HibernateUtil.getSessionFactory().openSession());
         setTransacao(getSessao().beginTransaction());
-        Criteria criteria = this.getSessao().createCriteria(EstoqueConsumo.class).add(Restrictions.between("dataVencimento", dataInicio, dataFim));
+        Criteria criteria = this.getSessao().createCriteria(EstoqueConsumo.class)
+                .add(Restrictions.between("dataVencimento", dataInicio, dataFim));
         return criteria.list();
 
 //        this.setSessao(HibernateUtil.getSessionFactory().openSession());
