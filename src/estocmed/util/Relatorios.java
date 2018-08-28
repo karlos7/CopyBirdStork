@@ -97,7 +97,12 @@ public class Relatorios {
             Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    private static String converterDataString(Date date) {
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        return f.format(date);
+    }
+    
     public static void gerarRelatorioTabela(List relatorioGeral) {
         String diretorioPdf = "saida_estoque_consumo" + formatarData.format(new Date()) + ".pdf";
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -111,18 +116,20 @@ public class Relatorios {
             document.open();
             gerarCabecalho();
 
-            PdfPTable tabela = new PdfPTable(4);
+            PdfPTable tabela = new PdfPTable(5);
 
 
             PdfPCell celulaTituloNome = new PdfPCell(new Phrase("Nome Produto", boldFont));
             PdfPCell celulaTituloSetor = new PdfPCell(new Phrase("Setor", boldFont));
             PdfPCell celulaTituloEstoque = new PdfPCell(new Phrase("Qtd. Estoque", boldFont));
             PdfPCell celulaTituloSaida = new PdfPCell(new Phrase("Qtd. Saída", boldFont));
+            PdfPCell celulaTituloVencimento = new PdfPCell(new Phrase("Vencimento", boldFont));
 
             tabela.addCell(celulaTituloNome);
             tabela.addCell(celulaTituloSetor);
             tabela.addCell(celulaTituloEstoque);
             tabela.addCell(celulaTituloSaida);
+            tabela.addCell(celulaTituloVencimento);
 
             for (Object objUsuario : relatorioGeral) {
 
@@ -132,11 +139,13 @@ public class Relatorios {
                 PdfPCell celulaSetor = new PdfPCell(new Phrase(estoqueConsumo.getTipoEntrada()));
                 PdfPCell celulaEstoque = new PdfPCell(new Phrase(estoqueConsumo.getQtdEstoque().toString()));
                 PdfPCell celulaSaida = new PdfPCell(new Phrase(estoqueConsumo.getQtdSaida().toString()));
+                PdfPCell celulaVencimento = new PdfPCell(new Phrase(converterDataString(estoqueConsumo.getDataVencimento())));
 
                 tabela.addCell(celulaNome);
                 tabela.addCell(celulaSetor);
                 tabela.addCell(celulaEstoque);
                 tabela.addCell(celulaSaida);
+                tabela.addCell(celulaVencimento);
             }
 
             tabela.setWidthPercentage(100);

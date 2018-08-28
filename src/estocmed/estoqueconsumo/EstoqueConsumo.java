@@ -108,4 +108,5 @@ public class EstoqueConsumo implements Comparable<EstoqueConsumo> {
     public void setTipoEntrada(String tipoEntrada) {
         this.tipoEntrada = tipoEntrada;
     }
+   
 }

@@ -11,18 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/telas/MenuPrincipal.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/estoqueconsumo/EstoqueConsumo.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/util/Relatorios.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/estoqueconsumo/EstoqueConsumoDAO.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/telas/CadastroUsuario.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/produtoconsumo/ProdutoConsumo.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/telas/CadastroDevolucaoPermanente.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/telas/InformarIntervaloDatas.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/util/GenericDAO.java</file>
-            <file>file:/C:/Users/Katyeudo/Documents/GitHub/CopyBirdStork/src/estocmed/telas/CadastroEstoqueConsumo.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

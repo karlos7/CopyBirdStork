@@ -13,6 +13,7 @@ import estocmed.util.Util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -157,10 +158,27 @@ public class InformarIntervaloDatas extends javax.swing.JDialog {
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         Util.limparCamposGenerico(this);
     }//GEN-LAST:event_btLimparActionPerformed
-
+    
+     public List ordenarData(List ec) {
+        
+        List<EstoqueConsumo> listaEstoque1 = ec;
+        List<EstoqueConsumo> listaEstoque2 = ec;
+        for (int i = 0; i < ec.size() - 1; i++) {
+            for (int j = i + 1; j < ec.size(); j++) {
+                
+                    if (listaEstoque1.get(i).getDataVencimento().after(listaEstoque2.get(j).getDataVencimento())  ) {
+                        Collections.swap(listaEstoque1, i, j);
+                    }
+                
+            }
+        }
+        return listaEstoque1;
+    }
+    
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
         List<EstoqueConsumo> estoqueConsumos = estoqueConsumoDAO.listaEntreDatas(estoqueConsumo, formataData(txtDataInicial.getText()), formataData(txtDataFinal.getText()));
-        Relatorios.gerarRelatorioTabela(estoqueConsumos);
+        List<EstoqueConsumo> listaEstoque1 = estoqueConsumos;
+        Relatorios.gerarRelatorioTabela(ordenarData(listaEstoque1));
     }//GEN-LAST:event_btPesquisarActionPerformed
 
     private Date formataData(String data) {
@@ -181,9 +199,6 @@ public class InformarIntervaloDatas extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    public String retornarData() {
-        return txtDataInicial.getText();
-    }
 
     /**
      * @param args the command line arguments
