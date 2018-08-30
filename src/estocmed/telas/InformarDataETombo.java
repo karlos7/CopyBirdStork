@@ -7,6 +7,10 @@ package estocmed.telas;
 
 
 import estocmed.util.Util;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -157,8 +161,22 @@ public class InformarDataETombo extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    public String retornarData(){
-        return txtData.getText();
+    public Date retornarData(){
+        return formataData(txtData.getText());
+    }
+    
+    private Date formataData(String data) {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+        Date d = null;
+        try {
+            DateFormat formatar = new SimpleDateFormat("dd/MM/yyyy");
+            d = formatar.parse(data);
+        } catch (ParseException e) {
+
+        }
+        return d;
     }
     
     public String retornarTombo(){

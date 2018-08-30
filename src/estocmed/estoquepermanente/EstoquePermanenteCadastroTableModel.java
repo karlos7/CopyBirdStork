@@ -5,7 +5,9 @@
  */
 package estocmed.estoquepermanente;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -31,7 +33,12 @@ public class EstoquePermanenteCadastroTableModel extends AbstractTableModel{
     public int getColumnCount() {
         return colunas.length;
     }
-
+    
+    private String converterDataString(Date date) {
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        return f.format(date);
+    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         EstoquePermanente estoque = estoques.get(rowIndex);
@@ -41,7 +48,7 @@ public class EstoquePermanenteCadastroTableModel extends AbstractTableModel{
             case 1:
                 return estoque.getTomboProdutoPermanente();
             case 2:
-                return estoque.getVencimentoPermanente();
+                return converterDataString(estoque.getVencimentoPermanente());
 
         }
         return null;

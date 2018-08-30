@@ -31,7 +31,7 @@ public class EstoquePermanente implements Comparable<EstoquePermanente> {
     @Column(length = 100, nullable = false)
     private Date dataEntradaPermanente;
     @Column(length = 100, nullable = false)
-    private String vencimentoPermanente;  //Date tbm??w
+    private Date vencimentoPermanente;
     @Column(length = 30, nullable = false)
     private String tomboProdutoPermanente;
 
@@ -83,15 +83,15 @@ public class EstoquePermanente implements Comparable<EstoquePermanente> {
     public void setDataEntradaPermanente(Date dataEntradaPermanente) {
         this.dataEntradaPermanente = dataEntradaPermanente;
     }
-    
-    public String getVencimentoPermanente() {
+
+    public Date getVencimentoPermanente() {
         return vencimentoPermanente;
     }
 
-    public void setVencimentoPermanente(String vencimentoPermanente) {
+    public void setVencimentoPermanente(Date vencimentoPermanente) {
         this.vencimentoPermanente = vencimentoPermanente;
     }
-
+    
     @Override
     public int compareTo(EstoquePermanente o) {
         return (o.isStatus() == this.status ? 0 : (this.status ? 1 : -1));
